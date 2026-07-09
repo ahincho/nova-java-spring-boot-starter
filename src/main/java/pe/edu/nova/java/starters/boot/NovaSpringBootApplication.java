@@ -1,4 +1,4 @@
-package pe.edu.galaxy.training.java.starters.boot;
+package pe.edu.nova.java.starters.boot;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Anotación de punto de entrada para aplicaciones basadas en el meta-framework
- * Galaxy Training.
+ * Nova Platform.
  * <p>
  * Reemplaza a {@link SpringBootApplication} como anotación principal de la clase
  * de arranque. Internamente hereda toda la funcionalidad de Spring Boot
@@ -20,7 +20,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * </p>
  *
  * <pre>
- * &#64;GalaxyTrainingSpringBootApplication
+ * &#64;NovaSpringBootApplication
  * public class MiAplicacion {
  *     public static void main(String[] args) {
  *         SpringApplication.run(MiAplicacion.class, args);
@@ -28,7 +28,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * }
  * </pre>
  *
- * @author Galaxy Training
+ * @author Nova Platform
  * @version 1.0.0
  * @see SpringBootApplication
  */
@@ -37,5 +37,5 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @Documented
 @Inherited
 @SpringBootApplication
-public @interface GalaxyTrainingSpringBootApplication {
+public @interface NovaSpringBootApplication {
 }

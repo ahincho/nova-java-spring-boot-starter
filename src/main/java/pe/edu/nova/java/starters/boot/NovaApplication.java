@@ -1,10 +1,10 @@
-package pe.edu.galaxy.training.java.starters.boot;
+package pe.edu.nova.java.starters.boot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
- * Punto de entrada para aplicaciones basadas en el meta-framework Galaxy Training.
+ * Punto de entrada para aplicaciones basadas en el meta-framework Nova Platform.
  * <p>
  * Envuelve {@link SpringApplication} proporcionando una API simplificada
  * que abstrae Spring Boot del código del equipo. Internamente configura
@@ -12,27 +12,27 @@ import org.springframework.context.ConfigurableApplicationContext;
  * </p>
  *
  * <pre>
- * &#64;GalaxyTrainingSpringBootApplication
+ * &#64;NovaSpringBootApplication
  * public class MiAplicacion {
  *     public static void main(String[] args) {
- *         GalaxyTrainingApplication.run(MiAplicacion.class, args);
+ *         NovaApplication.run(MiAplicacion.class, args);
  *     }
  * }
  * </pre>
  *
- * @author Galaxy Training
+ * @author Nova Platform
  * @version 1.0.0
  */
-public final class GalaxyTrainingApplication {
+public final class NovaApplication {
 
     /** Constructor privado — clase utilitaria, no instanciable. */
-    private GalaxyTrainingApplication() {
+    private NovaApplication() {
     }
 
     /**
-     * Arranca la aplicación Galaxy Training.
+     * Arranca la aplicación Nova Platform.
      *
-     * @param primarySource clase principal anotada con {@link GalaxyTrainingSpringBootApplication}
+     * @param primarySource clase principal anotada con {@link NovaSpringBootApplication}
      * @param args          argumentos de línea de comandos
      * @return el contexto de la aplicación
      */

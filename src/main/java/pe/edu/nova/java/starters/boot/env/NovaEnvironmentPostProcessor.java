@@ -1,4 +1,4 @@
-package pe.edu.galaxy.training.java.starters.boot.env;
+package pe.edu.nova.java.starters.boot.env;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +25,12 @@ import org.springframework.core.env.ConfigurableEnvironment;
  * Cuando ambas validaciones son exitosas, se registra un mensaje informativo
  * con las versiones detectadas.</p>
  *
- * @author Galaxy Training
+ * @author Nova Platform
  * @version 1.0.0
  */
-public class GalaxyTrainingEnvironmentPostProcessor implements EnvironmentPostProcessor {
+public class NovaEnvironmentPostProcessor implements EnvironmentPostProcessor {
 
-    private static final Logger logger = LoggerFactory.getLogger(GalaxyTrainingEnvironmentPostProcessor.class);
+    private static final Logger logger = LoggerFactory.getLogger(NovaEnvironmentPostProcessor.class);
 
     /**
      * Crea una nueva instancia del post-procesador de entorno.
@@ -38,7 +38,7 @@ public class GalaxyTrainingEnvironmentPostProcessor implements EnvironmentPostPr
      * <p>Este constructor es invocado automáticamente por el mecanismo de
      * carga de Spring Boot a través de {@code spring.factories}.</p>
      */
-    public GalaxyTrainingEnvironmentPostProcessor() {
+    public NovaEnvironmentPostProcessor() {
         // Constructor por defecto requerido por Spring Boot
     }
 
@@ -65,7 +65,7 @@ public class GalaxyTrainingEnvironmentPostProcessor implements EnvironmentPostPr
         validarVersionJava(versionJava);
         String versionSpringBoot = SpringBootVersion.getVersion();
         validarVersionSpringBoot(versionSpringBoot);
-        logger.info("[Galaxy Training] Validación exitosa — Java: {}, Spring Boot: {}", versionJava, versionSpringBoot);
+        logger.info("[Nova Platform] Validación exitosa — Java: {}, Spring Boot: {}", versionJava, versionSpringBoot);
     }
 
     /**
@@ -77,7 +77,7 @@ public class GalaxyTrainingEnvironmentPostProcessor implements EnvironmentPostPr
     void validarVersionJava(int versionActual) {
         if (versionActual < JAVA_VERSION_MINIMA) {
             throw new IllegalStateException(
-                    "[Galaxy Training] Error: Se requiere Java " + JAVA_VERSION_MINIMA + " o superior. Versión detectada: "
+                    "[Nova Platform] Error: Se requiere Java " + JAVA_VERSION_MINIMA + " o superior. Versión detectada: "
                             + versionActual + ". Por favor, actualice su JDK.");
         }
     }
@@ -95,7 +95,7 @@ public class GalaxyTrainingEnvironmentPostProcessor implements EnvironmentPostPr
     void validarVersionSpringBoot(String versionSpringBoot) {
         if (versionSpringBoot == null) {
             throw new IllegalStateException(
-                    "[Galaxy Training] Error: No se pudo determinar la versión de Spring Boot. "
+                    "[Nova Platform] Error: No se pudo determinar la versión de Spring Boot. "
                             + "Verifique que el framework esté correctamente configurado.");
         }
 
@@ -104,13 +104,13 @@ public class GalaxyTrainingEnvironmentPostProcessor implements EnvironmentPostPr
             majorVersion = Integer.parseInt(versionSpringBoot.split("\\.")[0]);
         } catch (NumberFormatException e) {
             throw new IllegalStateException(
-                    "[Galaxy Training] Error: Se requiere Spring Boot 4.x (major version 4). Versión detectada: "
+                    "[Nova Platform] Error: Se requiere Spring Boot 4.x (major version 4). Versión detectada: "
                             + versionSpringBoot + ". Por favor, verifique la versión del framework.");
         }
 
         if (majorVersion != SPRING_BOOT_MAJOR_REQUERIDA) {
             throw new IllegalStateException(
-                    "[Galaxy Training] Error: Se requiere Spring Boot 4.x (major version 4). Versión detectada: "
+                    "[Nova Platform] Error: Se requiere Spring Boot 4.x (major version 4). Versión detectada: "
                             + versionSpringBoot + ". Por favor, verifique la versión del framework.");
         }
     }

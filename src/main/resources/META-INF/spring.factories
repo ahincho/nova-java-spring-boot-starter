@@ -1,2 +1,2 @@
 org.springframework.boot.env.EnvironmentPostProcessor=\
-  pe.edu.galaxy.training.java.starters.boot.env.GalaxyTrainingEnvironmentPostProcessor
+  pe.edu.nova.java.starters.boot.env.NovaEnvironmentPostProcessor
