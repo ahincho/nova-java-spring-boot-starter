@@ -71,13 +71,15 @@ jobs:
           fi
           echo "Visibility validation OK"
 
-      - name: Publish to GitHub Packages
-        run: ./gradlew publish -Pvisibility=${{ steps.visibility.outputs.value }}
+- name: Publish to GitHub Packages
+        run: |
+          ./gradlew dependencyInsight --dependency nova-mapper-utils --configuration compileClasspath 2>&1 || true
+          echo "---"
+          ./gradlew publish -Pvisibility=${{ steps.visibility.outputs.value }}
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Used only to READ internal Nova Platform dependencies published in other
-          # repos' GitHub Packages (GITHUB_TOKEN cannot read packages cross-repo).
-          # Falls back to GITHUB_TOKEN if the PAT is not configured (will fail to
-          # resolve cross-repo dependencies, but keeps same-repo publish working).
+          # repos' GitHub Packages (GITHUB_TOKEN cannot read packages from another repo, so this needs a PAT
+          # (falls back to GITHUB_TOKEN for local/manual builds where only that is set).
           NOVA_PACKAGES_READ_TOKEN: ${{ secrets.NOVA_RELEASE_PAT || secrets.GITHUB_TOKEN }}
