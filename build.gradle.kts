@@ -1,6 +1,7 @@
 plugins {
     id("java-library")
     id("maven-publish")
+    checkstyle
     id("net.nemerosa.versioning") version "4.0.1"
     id("signing")
 }
@@ -39,12 +40,12 @@ dependencies {
     api("org.springframework.boot:spring-boot-starter-actuator")
 
     // Internal Nova Platform libraries (version from BOM)
-    api("pe.edu.nova.java.libs:date-utils")
-    api("pe.edu.nova.java.libs:mapper-utils")
+    api("pe.edu.nova.java.libs:nova-date-utils")
+    api("pe.edu.nova.java.libs:nova-mapper-utils")
 
     // Internal Nova Platform starters (version from BOM)
-    api("pe.edu.nova.java.starters:mask-utils-spring-boot-starter")
-    api("pe.edu.nova.java.starters:api-standard-spring-boot-starter")
+    api("pe.edu.nova.java.starters:nova-mask-starter")
+    api("pe.edu.nova.java.starters:nova-api-standard-starter")
 
     // Test
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
@@ -63,6 +64,13 @@ tasks.javadoc {
         encoding = "UTF-8"
         charSet = "UTF-8"
     }
+}
+
+checkstyle {
+    // Only lint production code. Test suites commonly rely on static-import
+    // wildcards (org.junit.jupiter.api.Assertions.*, net.jqwik.api.*), which
+    // is an accepted convention that would otherwise trip AvoidStarImport.
+    sourceSets = listOf(project.sourceSets.main.get())
 }
 
 publishing {
