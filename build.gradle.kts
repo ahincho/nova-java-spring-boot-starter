@@ -67,7 +67,7 @@ val jqwikVersion = "1.9.3"
 
 dependencies {
     // BOM — centralizes versions for Spring Boot and internal libs
-    api(platform("pe.edu.nova.java:nova-spring-boot-bom:1.0.0"))
+    api(platform("pe.edu.nova.java:nova-spring-boot-bom:1.0.1"))
 
     // Spring Boot starters (version from BOM)
     api("org.springframework.boot:spring-boot-starter")
