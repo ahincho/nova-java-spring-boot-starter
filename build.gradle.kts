@@ -24,6 +24,42 @@ java {
 repositories {
     mavenLocal()
     mavenCentral()
+    // Internal Nova Platform dependencies (each lives in its own repo/package).
+    // GITHUB_TOKEN cannot read packages from another repo, so this needs a PAT
+    // (falls back to GITHUB_TOKEN for local/manual builds where only that is set).
+    val readToken = System.getenv("NOVA_PACKAGES_READ_TOKEN") ?: System.getenv("GITHUB_TOKEN")
+    maven {
+        name = "NovaBom"
+        url = uri("https://maven.pkg.github.com/ahincho/nova-bom")
+        credentials {
+            username = System.getenv("GITHUB_ACTOR")
+            password = readToken
+        }
+    }
+    maven {
+        name = "NovaDateUtils"
+        url = uri("https://maven.pkg.github.com/ahincho/nova-java-date-utils")
+        credentials {
+            username = System.getenv("GITHUB_ACTOR")
+            password = readToken
+        }
+    }
+    maven {
+        name = "NovaMapperUtils"
+        url = uri("https://maven.pkg.github.com/ahincho/nova-java-mapper-utils")
+        credentials {
+            username = System.getenv("GITHUB_ACTOR")
+            password = readToken
+        }
+    }
+    maven {
+        name = "NovaCommonsSpringBootStarter"
+        url = uri("https://maven.pkg.github.com/ahincho/nova-java-commons-spring-boot-starter")
+        credentials {
+            username = System.getenv("GITHUB_ACTOR")
+            password = readToken
+        }
+    }
 }
 
 val junitVersion = "6.0.3"
@@ -31,7 +67,7 @@ val jqwikVersion = "1.9.3"
 
 dependencies {
     // BOM — centralizes versions for Spring Boot and internal libs
-    api(platform("pe.edu.nova.java:nova-spring-boot-bom:0.1.0-SNAPSHOT"))
+    api(platform("pe.edu.nova.java:nova-spring-boot-bom:1.0.0"))
 
     // Spring Boot starters (version from BOM)
     api("org.springframework.boot:spring-boot-starter")
