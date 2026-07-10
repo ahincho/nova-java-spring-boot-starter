@@ -71,11 +71,14 @@ jobs:
           fi
           echo "Visibility validation OK"
 
-- name: Publish to GitHub Packages
+      - name: Debug dependency resolution
         run: |
+          echo "=== BOM resolution for nova-mapper-utils ==="
           ./gradlew dependencyInsight --dependency nova-mapper-utils --configuration compileClasspath 2>&1 || true
-          echo "---"
-          ./gradlew publish -Pvisibility=${{ steps.visibility.outputs.value }}
+          echo "=== END ==="
+
+      - name: Publish to GitHub Packages
+        run: ./gradlew publish -Pvisibility=${{ steps.visibility.outputs.value }}
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
