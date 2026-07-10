@@ -75,6 +75,8 @@ jobs:
         run: |
           echo "=== BOM resolution for nova-mapper-utils ==="
           ./gradlew dependencyInsight --dependency nova-mapper-utils --configuration compileClasspath 2>&1 || true
+          echo "=== BOM resolution for nova-bom (parent) ==="
+          ./gradlew dependencyInsight --dependency nova-bom --configuration compileClasspath 2>&1 || true
           echo "=== END ==="
 
       - name: Publish to GitHub Packages
