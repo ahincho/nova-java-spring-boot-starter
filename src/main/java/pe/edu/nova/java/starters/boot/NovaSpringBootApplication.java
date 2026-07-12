@@ -29,7 +29,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * </pre>
  *
  * @author Nova Platform
- * @version 1.0.0
+ * @version 1.0.1
  * @see SpringBootApplication
  */
 @Target(ElementType.TYPE)
