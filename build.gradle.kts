@@ -76,15 +76,29 @@ repositories {
 //  - Apache HttpComponents Core5 5.4.2+ for CVE-2026-54428, CVE-2026-54399
 //  - Apache Commons BeanUtils 1.11.0+ for CVE-2025-48734
 //  - plexus-utils 3.5.1+ for CVE-2025-67030 (commit 6d780b3 per NVD)
-configurations.all {
-    resolutionStrategy {
-        // Force Tomcat 11.0.24 to fix 3 CVEs in Spring Boot 4.1.0's transitive
-        // tomcat-embed-* deps (CVE-2026-53404 HIGH 7.3, CVE-2026-55276 CRITICAL
-        // 9.1, CVE-2026-53434 CRITICAL 9.1 - all in 11.0.22, fixed in 11.0.23+).
-        force("org.apache.tomcat.embed:tomcat-embed-core:11.0.24")
-        force("org.apache.tomcat.embed:tomcat-embed-websocket:11.0.24")
-        force("org.apache.tomcat.embed:tomcat-embed-el:11.0.24")
+dependencies {
+    constraints {
+        // Apache Tomcat 11.0.24 strictly - fixes CVE-2026-53434, CVE-2026-55276,
+        // CVE-2026-53404 (all in 11.0.22, fixed in 11.0.23+). Used constraints
+        // + strictly() instead of resolutionStrategy.force() because the latter
+        // triggers a Gradle 9 configuration cache serialization bug in
+        // :compileJava.classpath (reproducible in 29269399404).
+        implementation("org.apache.tomcat.embed:tomcat-embed-core") {
+            version { strictly("11.0.24") }
+            because("CVE-2026-53434, CVE-2026-55276, CVE-2026-53404 require 11.0.23+")
+        }
+        implementation("org.apache.tomcat.embed:tomcat-embed-websocket") {
+            version { strictly("11.0.24") }
+            because("Same CVE-2026-53434, CVE-2026-55276, CVE-2026-53404 in 11.0.22")
+        }
+        implementation("org.apache.tomcat.embed:tomcat-embed-el") {
+            version { strictly("11.0.24") }
+            because("Same CVE-2026-53434, CVE-2026-55276, CVE-2026-53404 in 11.0.22")
+        }
     }
+}
+
+configurations.all {
     resolutionStrategy.eachDependency {
         if (requested.group == "org.apache.httpcomponents" && requested.name.startsWith("httpcore")) {
             useVersion("4.4.16")
