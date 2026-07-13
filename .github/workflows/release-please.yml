@@ -5,9 +5,18 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   release-please:
     uses: ahincho/nova-devops/.github/workflows/reusable-release-please.yml@main
+    with:
+      release-type: java
+      path: .
+      config-file: .release-please-config.json
+      manifest-file: .release-please-manifest.json
     secrets:
       # NOVA_RELEASE_PAT is a Personal Access Token (contents:write + pull-requests:write).
       # GITHUB_TOKEN cannot be used here because GitHub does not trigger new workflow
