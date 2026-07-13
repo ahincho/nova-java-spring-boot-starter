@@ -1,16 +1,16 @@
 {
+  "last-release-sha": "fef903e6084b8439e59ba2f811d7d4805666d3e3",
   "packages": {
     ".": {
+      "component": "nova-starter",
       "package-name": "pe.edu.nova.java.starters:nova-starter",
       "release-type": "java",
+      "include-component-in-tag": false,
+      "skip-snapshot": true,
       "bump-minor-pre-major": true,
       "bump-patch-for-minor-pre-major": true,
       "draft": false,
       "prerelease": false
     }
-  },
-  "last-release-sha": "fef903e6084b8439e59ba2f811d7d4805666d3e3",
-  "include-component-in-tag": false,
-  "include-v-in-tag": true,
-  "release-type": "java"
+  }
 }
