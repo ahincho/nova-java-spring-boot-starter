@@ -69,11 +69,22 @@ repositories {
 // cover any classpath (compile, runtime, even buildscript transitives) so the
 // OWASP gate reflects the real, patched state.
 //
+//  - Apache Tomcat 11.0.23+ for CVE-2026-53434, CVE-2026-55276, CVE-2026-53404
+//    (Spring Boot 4.1.0's BOM pins tomcat-embed-core to 11.0.22 which is still
+//    vulnerable to these; 11.0.24 is the latest 11.0.x patch with the fixes)
 //  - Apache HttpComponents Core 4.4.16+ for CVE-2026-54428, CVE-2026-54399
 //  - Apache HttpComponents Core5 5.4.2+ for CVE-2026-54428, CVE-2026-54399
 //  - Apache Commons BeanUtils 1.11.0+ for CVE-2025-48734
 //  - plexus-utils 3.5.1+ for CVE-2025-67030 (commit 6d780b3 per NVD)
 configurations.all {
+    resolutionStrategy {
+        // Force Tomcat 11.0.24 to fix 3 CVEs in Spring Boot 4.1.0's transitive
+        // tomcat-embed-* deps (CVE-2026-53404 HIGH 7.3, CVE-2026-55276 CRITICAL
+        // 9.1, CVE-2026-53434 CRITICAL 9.1 - all in 11.0.22, fixed in 11.0.23+).
+        force("org.apache.tomcat.embed:tomcat-embed-core:11.0.24")
+        force("org.apache.tomcat.embed:tomcat-embed-websocket:11.0.24")
+        force("org.apache.tomcat.embed:tomcat-embed-el:11.0.24")
+    }
     resolutionStrategy.eachDependency {
         if (requested.group == "org.apache.httpcomponents" && requested.name.startsWith("httpcore")) {
             useVersion("4.4.16")
