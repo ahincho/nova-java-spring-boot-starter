@@ -138,13 +138,16 @@ dependencies {
     api("org.springframework.boot:spring-boot-starter-jackson")
     api("org.springframework.boot:spring-boot-starter-actuator")
 
-    // Internal Nova Platform libraries (version from BOM)
-    api("pe.edu.nova.java.libs:nova-date-utils")
-    api("pe.edu.nova.java.libs:nova-mapper-utils")
-
-    // Internal Nova Platform starters (version from BOM)
-    api("pe.edu.nova.java.starters:nova-mask-starter")
-    api("pe.edu.nova.java.starters:nova-api-standard-starter")
+    // Internal Nova Platform libraries — versions are hardcoded here because
+    // they used to come from the local nova-spring-boot-bom:1.0.0 which we
+    // removed (see comment above). All 4 are at 1.0.0 as published to
+    // GitHub Packages. Until the local BOM is bumped to 1.1.0, we must
+    // declare versions inline. The GitHub Packages repo (configured in the
+    // reusable-workflow) resolves them.
+    api("pe.edu.nova.java.libs:nova-date-utils:1.0.0")
+    api("pe.edu.nova.java.libs:nova-mapper-utils:1.0.0")
+    api("pe.edu.nova.java.starters:nova-mask-starter:1.0.0")
+    api("pe.edu.nova.java.starters:nova-api-standard-starter:1.0.0")
 
     // Test
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
