@@ -69,24 +69,11 @@ repositories {
 // cover any classpath (compile, runtime, even buildscript transitives) so the
 // OWASP gate reflects the real, patched state.
 //
-//  - Spring Boot 4.1.0 (force-upgrade from 4.0.5 pinned by nova-spring-boot-bom
-//    1.0.0; reduces transitive CVEs in Jackson 2.21.2 -> 2.21.x, Tomcat
-//    11.0.20 -> 11.0.22+, etc.)
 //  - Apache HttpComponents Core 4.4.16+ for CVE-2026-54428, CVE-2026-54399
 //  - Apache HttpComponents Core5 5.4.2+ for CVE-2026-54428, CVE-2026-54399
 //  - Apache Commons BeanUtils 1.11.0+ for CVE-2025-48734
 //  - plexus-utils 3.5.1+ for CVE-2025-67030 (commit 6d780b3 per NVD)
 configurations.all {
-    resolutionStrategy {
-        // Force Spring Boot 4.1.0 (latest stable, released 2026-06-10).
-        // The local nova-spring-boot-bom:1.0.0 pins spring-boot-dependencies
-        // to 4.0.5, which transitively pulls in CVEs in Jackson 2.21.2,
-        // tomcat-embed-core 11.0.20, spring-core 7.0.6, etc. Forcing 4.1.0
-        // makes the resolver pick the newer spring-boot-dependencies BOM,
-        // which provides patched versions transitively. `force` is required
-        // because BOM imports are not visible to eachDependency.
-        force("org.springframework.boot:spring-boot-dependencies:4.1.0")
-    }
     resolutionStrategy.eachDependency {
         if (requested.group == "org.apache.httpcomponents" && requested.name.startsWith("httpcore")) {
             useVersion("4.4.16")
@@ -111,8 +98,14 @@ val junitVersion = "6.0.3"
 val jqwikVersion = "1.9.3"
 
 dependencies {
-    // BOM — centralizes versions for Spring Boot and internal libs
-    api(platform("pe.edu.nova.java:nova-spring-boot-bom:1.0.0"))
+    // Spring Boot 4.1.0 BOM directly (Maven Central) — local nova-spring-boot-bom:1.0.0
+    // pins spring-boot-dependencies to 4.0.5 which transitively pulls in 339 CVEs
+    // (Jackson 2.21.2 CRITICAL 9.1, Tomcat 11.0.20 CRITICAL 9.1, Spring Core 7.0.6
+    // CRITICAL 9.8, OpenTelemetry semconv 1.40.0 HIGH 7.5, etc.). The local BOM
+    // cannot be updated without a coordinated nova-bom release, so we use the
+    // upstream BOM at 4.1.0 (latest stable, released 2026-06-10) which provides
+    // transitively-patched versions of all those dependencies.
+    api(platform("org.springframework.boot:spring-boot-dependencies:4.1.0"))
 
     // Spring Boot starters (version from BOM)
     api("org.springframework.boot:spring-boot-starter")
